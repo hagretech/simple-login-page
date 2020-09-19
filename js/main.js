@@ -1,8 +1,10 @@
 let btn = document.getElementById('btn-login'),
     username = document.getElementById('username'),
     password = document.getElementById('password'),
+    message_box = document.getElementById('message'),
     username_val = '',
-    password_val = '';
+    password_val = '',
+    message = '';
 
 
 //  Event listner for the login button
@@ -12,20 +14,29 @@ btn.addEventListener('click', function (e) {
     username_val = username.value
     password_val = password.value
 
+
     validator(username_val, password_val)
+
+    // adding class to message box
+    if (validator) {
+        message_box.className = "success"
+    } else {
+        message_box.className = "error"
+    }
+    message_box.innerHTML = message
 })
 
 
 function validator(username_val, password_val) {
     // Checking if input is empity
     if (isEmpity(username_val)) {
-        console.log('username can\'t be empity')
+        message = 'username can\'t be empity'
 
         // for the validator
         return false
     };
     if (isEmpity(password_val)) {
-        console.log('password can\'t be empity')
+        message = 'password can\'t be empity'
 
         // for the validator
         return false
@@ -33,13 +44,13 @@ function validator(username_val, password_val) {
 
     // checking for char length
     if (invalid_char_length(username_val)) {
-        console.log('username must be between 8 and 25 character')
+        message = 'username must be between 8 and 25 character'
 
         // for the validator
         return false
     };
     if (invalid_char_length(password_val)) {
-        console.log('password must be between 8 and 25 character')
+        message = 'password must be between 8 and 25 character'
 
         // for the validator
         return false
@@ -47,7 +58,7 @@ function validator(username_val, password_val) {
 
     // checking for starting letter
     if (invalid_starting_char(username_val)) {
-        console.log('username must starit with letter')
+        message = 'username must starit with letter'
 
         // for the validator
         return false
@@ -55,11 +66,14 @@ function validator(username_val, password_val) {
 
     // checking for invalid characters
     if (invalid_char(username_val)) {
-        console.log('con conatin letters no and _ onley')
+        message = 'username can conatin letters, numbers and \'_ \' only'
 
         // for the validator
         return false
     }
+    message = 'success'
+
+    return true
 };
 
 // function to check if it is empity
